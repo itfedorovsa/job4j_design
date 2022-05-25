@@ -23,7 +23,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     }
 
     public int checkIndex(int index) {
-            return Objects.checkIndex(index, container.length);
+            return Objects.checkIndex(index, container.length - 1);
     }
 
     @Override
