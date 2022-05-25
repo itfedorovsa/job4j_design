@@ -44,7 +44,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        E value = null;
         Node<E> temp;
             if (index < size / 2) {
                 temp = first;
