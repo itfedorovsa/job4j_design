@@ -46,24 +46,18 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         Objects.checkIndex(index, size);
         E value = null;
         Node<E> temp;
-            if (index == 0) {
-                value = first.item;
-            } else if (index == size - 1) {
-                value = last.item;
-            } else if (index < size / 2) {
+            if (index < size / 2) {
                 temp = first;
                 for (int count = 0; count < index; count++) {
                     temp = temp.next;
                 }
-                value = temp.item;
-            } else if (index >= size / 2) {
+            } else {
                 temp = last;
-                for (int count = size - 1; count > 0; count--) {
+                for (int count = size - 1; count > index; count--) {
                     temp = temp.prev;
                 }
-                value = temp.item;
             }
-        return value;
+        return temp.item;
     }
 
     @Override
