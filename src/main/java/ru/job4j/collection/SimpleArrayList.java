@@ -44,7 +44,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         if (newSize > index) {
             System.arraycopy(container, index + 1, container, index, newSize - index);
         } else {
-            container[size] = null;
+            container[size - 1] = null;
         }
         size = newSize;
         modCount++;
@@ -83,7 +83,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
                 }
                 return container[iterIndex++];
             }
-
         };
     }
 }
