@@ -22,7 +22,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
         Node(Node<E> prev, E element, Node<E> next) {
             this.item = element;
-            this.prev = prev;
             this.next = next;
         }
     }
@@ -44,18 +43,10 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        Node<E> temp;
-            if (index < size / 2) {
-                temp = first;
-                for (int count = 0; count < index; count++) {
-                    temp = temp.next;
-                }
-            } else {
-                temp = last;
-                for (int count = size - 1; count > index; count--) {
-                    temp = temp.prev;
-                }
-            }
+        Node<E> temp = first;
+        for (int count = 0; count < index; count++) {
+            temp = temp.next;
+        }
         return temp.item;
     }
 
