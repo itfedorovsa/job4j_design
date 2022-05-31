@@ -28,8 +28,8 @@ public class User {
             String key = user.toString();
             String value = map.get(user).toString();
             int hash = user.hashCode();
-            System.out.println("Key: " + key + ", Value: " + value + ", HashCode: " + hash);
+            int index = hash & (map.size() - 1);
+            System.out.println("Key: " + key + ", Value: " + value + ", HashCode: " + hash + ", Index: " + index);
         }
-
     }
 }
