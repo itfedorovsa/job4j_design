@@ -29,7 +29,8 @@ public class User {
             String value = map.get(user).toString();
             int hash = user == null ? 0 : user.hashCode() ^ (user.hashCode() >>> 16);
             int index = hash & (16 - 1);
-            System.out.println("Key: " + key + ", Value: " + value + ", HashCode: " + hash + ", Index: " + index);
+            System.out.println("Key: " + key + ", Value: " + value
+                    + ", HashCode: " + user.hashCode() + ", Hash: " + hash + ", Index: " + index);
         }
     }
 }
