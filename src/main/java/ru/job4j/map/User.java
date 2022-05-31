@@ -27,10 +27,10 @@ public class User {
         return Objects.equals(name, user.name) && children == user.children && Objects.equals(birthday, user.birthday);
     }
 
-    /*@Override
+    @Override
     public int hashCode() {
         return Objects.hash(name, children, birthday);
-    }*/
+    }
 
     public static void main(String[] args) {
         Calendar date = new GregorianCalendar();
@@ -48,10 +48,13 @@ public class User {
         for (User user : map.keySet()) {
             String key = user.toString();
             String value = map.get(user).toString();
+
             int hash = user == null ? 0 : user.hashCode() ^ (user.hashCode() >>> 16);
             int index = hash & (16 - 1);
             System.out.println("Key: " + key + ", Value: " + value
                     + ", HashCode: " + user.hashCode() + ", Hash: " + hash + ", Index: " + index);
         }
+        System.out.println("First key: " + first + ", First hash: " + (first.hashCode() ^ (first.hashCode() >>> 16)));
+        System.out.println("Second key: " + second + ", Second hash: " + (second.hashCode() ^ (second.hashCode() >>> 16)));
     }
 }
