@@ -27,7 +27,9 @@ public class User {
         for (User user : map.keySet()) {
             String key = user.toString();
             String value = map.get(user).toString();
-            System.out.println("Key: " + key + ", Value: " + value);
+            int hash = user.hashCode();
+            System.out.println("Key: " + key + ", Value: " + value + ", HashCode: " + hash);
         }
+
     }
 }
