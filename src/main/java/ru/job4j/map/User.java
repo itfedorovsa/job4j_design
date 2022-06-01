@@ -1,8 +1,7 @@
 package ru.job4j.map;
 
 import java.util.*;
-
-import static java.util.Calendar.APRIL;
+import java.util.Map;
 
 public class User {
     private String name;
@@ -48,7 +47,6 @@ public class User {
         for (User user : map.keySet()) {
             String key = user.toString();
             String value = map.get(user).toString();
-
             int hash = user == null ? 0 : user.hashCode() ^ (user.hashCode() >>> 16);
             int index = hash & (16 - 1);
             System.out.println("Key: " + key + ", Value: " + value
