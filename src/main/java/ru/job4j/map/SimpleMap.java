@@ -41,11 +41,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
+        capacity *= 2;
         MapEntry<K, V>[] temp = table;
-        table = new MapEntry[capacity * 2];
+        table = new MapEntry[capacity];
         for (MapEntry<K, V> el : temp) {
             if (el != null) {
                 this.put(el.key, el.value);
+                count--;
             }
         }
     }
@@ -58,9 +60,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean remove(K key) {
+        int index = indexFor(hash(key.hashCode()));
         boolean isRemoved = false;
-        if (table[indexFor(hash(key.hashCode()))] != null) {
-            table[indexFor(hash(key.hashCode()))] = null;
+        if (table[index] != null) {
+            table[index] = null;
             isRemoved = true;
             count--;
             modCount++;
