@@ -41,13 +41,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
+        count = 0;
         capacity *= 2;
         MapEntry<K, V>[] temp = table;
         table = new MapEntry[capacity];
         for (MapEntry<K, V> el : temp) {
             if (el != null) {
                 this.put(el.key, el.value);
-                count--;
             }
         }
     }
