@@ -13,7 +13,7 @@ public class LogFilter {
             strings = bufferedReader.lines()
                     .map(m -> m.split(" "))
                     .filter(f -> "404".equals(f[f.length - 2]))
-                    .map(Arrays::toString)
+                    .map(m -> String.join(" ", m))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,6 +24,8 @@ public class LogFilter {
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
-        System.out.println(log);
+        for (String el : log) {
+            System.out.println(el);
+        }
     }
 }
