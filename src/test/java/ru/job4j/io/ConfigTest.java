@@ -52,6 +52,15 @@ public class ConfigTest {
         assertThat(config.value("surname"), is("Fisher=1"));
     }
 
+    @Test
+    public void whenPairWithPreviousSpaces() {
+        String path = "./data/pair_with_previous_spaces.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("name"), is("Bob"));
+        assertThat(config.value("surname"), is("Fisher"));
+    }
+
     @Test (expected = IllegalArgumentException.class)
     public void whenNotPairAtStart() {
         String path = "./data/not_pair_at_start.properties";
@@ -69,6 +78,13 @@ public class ConfigTest {
     @Test (expected = IllegalArgumentException.class)
     public void whenOnlyEqualSymbol() {
         String path = "./data/not_pair_only_equal_symbol.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenNotPairWithoutEqualSymbol() {
+        String path = "./data/not_pair_without_equal_symbol.properties";
         Config config = new Config(path);
         config.load();
     }

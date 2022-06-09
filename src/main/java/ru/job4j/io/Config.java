@@ -19,11 +19,13 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(this.path))) {
             in.lines()
+                    .map(String::trim)
                     .filter(f -> !f.startsWith("#") && !f.startsWith(" #"))
                     .filter(f -> !"".equals(f))
                     .filter(f -> {
-                            if (f.startsWith("=") || f.endsWith("=") && f.indexOf("=") == f.lastIndexOf("=")) {
-                                throw new IllegalArgumentException();
+                            if (f.startsWith("=") || !f.contains("=")
+                                    || f.endsWith("=") && f.indexOf("=") == f.lastIndexOf("=")) {
+                                throw new IllegalArgumentException("Incorrect properties input. Form: \"Key=Value\"");
                             }
                             return true;
                      })
