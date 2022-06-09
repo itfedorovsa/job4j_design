@@ -22,7 +22,7 @@ public class Analizy {
                             || "300".equals(f.getValue()) && builder.length() != 0
                             || "400".equals(f.getValue()) && builder.length() == 0
                             || "500".equals(f.getValue()) && builder.length() == 0)
-                    .peek(m -> {
+                    .forEach(m -> {
                         if ("400".equals(m.getValue()) || "500".equals(m.getValue())) {
                             builder.append(m.getKey());
                             builder.append(";");
@@ -32,8 +32,7 @@ public class Analizy {
                             writer.println(builder);
                             builder.delete(0, 18);
                         }
-                    })
-                    .forEach(System.out::println);
+                    });
         } catch (IOException e) {
             e.printStackTrace();
         }
