@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,14 +17,13 @@ public class Search {
     }
 
     public static boolean validation(String[] args) {
-        boolean isValidated = true;
-        if (args.length == 0 || args.length == 1) {
-            isValidated = false;
+        File path = new File(args[0]);
+        if (args.length != 2 || !path.exists() || !path.isDirectory() || !args[1].startsWith(".")) {
             throw new IllegalArgumentException(
                     "Invalid arguments. Use [0, 1]: java -jar search.jar ROOT_FOLDER .js");
 
         }
-        return isValidated;
+        return true;
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
