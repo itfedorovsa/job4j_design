@@ -1,0 +1,60 @@
+package ru.job4j.io;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ArgsName {
+
+    private final Map<String, String> values = new HashMap<>();
+
+    public String get(String key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalArgumentException("Key is not found");
+        }
+        return values.get(key);
+    }
+
+    private static boolean validation(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException(
+                    "Invalid arguments. Use [0 - 1]: java -jar argsname.jar Xmx encoding");
+        }
+        for (String arg : args) {
+            arg.trim();
+            if (!arg.startsWith("-") || arg.startsWith("-") && arg.charAt(1) == '=' || arg.startsWith("=")
+                    || arg.endsWith("=") && arg.indexOf("=") == arg.lastIndexOf("=") || !arg.contains("=")) {
+                throw new IllegalArgumentException("Incorrect pair. Form: \"-Key=Value\"");
+            }
+        }
+        return true;
+    }
+
+    private void parse(String[] args) {
+        if (validation(args)) {
+            Arrays.stream(args)
+                    .map(m -> {
+                        if (m.startsWith("-")) {
+                            m = m.substring(1);
+                        }
+                        return m;
+                    })
+                    .map(m -> m.split("=", 2))
+                    .forEach(f -> values.put(f[0], f[1]));
+        }
+    }
+
+    public static ArgsName of(String[] args) {
+        ArgsName names = new ArgsName();
+        names.parse(args);
+        return names;
+    }
+
+    public static void main(String[] args) {
+        ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512", "-encoding=UTF-8"});
+        System.out.println(jvm.get("Xmx"));
+
+        ArgsName zip = ArgsName.of(new String[] {"-out=project.zip", "-encoding=UTF-8"});
+        System.out.println(zip.get("out"));
+    }
+}
