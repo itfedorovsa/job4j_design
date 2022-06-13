@@ -16,12 +16,23 @@ public class Search {
         }
     }
 
-    public static boolean validation(String[] args) {
+    private static boolean validation(String[] args) {
         File path = new File(args[0]);
-        if (args.length != 2 || !path.exists() || !path.isDirectory() || !args[1].startsWith(".")) {
+        if (args.length != 2) {
             throw new IllegalArgumentException(
-                    "Invalid arguments. Use [0, 1]: java -jar search.jar ROOT_FOLDER .js");
-
+                    "Invalid amount of arguments. Required: 2. Use [0, 1]: java -jar search.jar ROOT_FOLDER .js");
+        }
+        if (!path.exists()) {
+            throw new IllegalArgumentException(
+                    "The path is not exist");
+        }
+        if (!path.isDirectory()) {
+            throw new IllegalArgumentException(
+                    "The path is not a directory.");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException(
+                    "Incorreсt second parameter form. Use \".js\"");
         }
         return true;
     }
