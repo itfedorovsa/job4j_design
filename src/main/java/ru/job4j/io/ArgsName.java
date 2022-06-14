@@ -15,24 +15,18 @@ public class ArgsName {
         return values.get(key);
     }
 
-    private static boolean validation(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException(
-                    "Invalid arguments. Use [0 - 1]: java -jar argsname.jar Xmx encoding");
-        }
-        for (String arg : args) {
-            arg.trim();
-            if (!arg.startsWith("-") || arg.startsWith("-") && arg.charAt(1) == '=' || arg.startsWith("=")
-                    || arg.endsWith("=") && arg.indexOf("=") == arg.lastIndexOf("=") || !arg.contains("=")) {
-                throw new IllegalArgumentException("Incorrect pair. Form: \"-Key=Value\"");
-            }
+    private static boolean validation(String str) {
+        str.trim();
+        if (!str.startsWith("-") || str.startsWith("-") && str.charAt(1) == '=' || str.startsWith("=")
+            || str.endsWith("=") && str.indexOf("=") == str.lastIndexOf("=") || !str.contains("=")) {
+            throw new IllegalArgumentException("Incorrect pair. Form: \"-Key=Value\"");
         }
         return true;
     }
 
     private void parse(String[] args) {
-        if (validation(args)) {
             Arrays.stream(args)
+                    .filter(ArgsName::validation)
                     .map(m -> {
                         if (m.startsWith("-")) {
                             m = m.substring(1);
@@ -40,11 +34,15 @@ public class ArgsName {
                         return m;
                     })
                     .map(m -> m.split("=", 2))
-                    .forEach(f -> values.put(f[0], f[1]));
-        }
+                    .forEach(f -> values.put(f[0], f[1])
+            );
     }
 
     public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException(
+                    "Invalid arguments. Use [0 - 1]: java -jar argsname.jar Xmx encoding");
+        }
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
