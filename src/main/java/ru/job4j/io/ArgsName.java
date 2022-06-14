@@ -17,7 +17,7 @@ public class ArgsName {
 
     private static boolean validation(String str) {
         str.trim();
-        if (!str.startsWith("-") || !str.contains("=") || str.startsWith("-=") || str.startsWith("=")
+        if (!str.startsWith("-") || !str.contains("=") || str.startsWith("-=")
             || str.endsWith("=") && str.indexOf("=") == str.lastIndexOf("=")) {
             throw new IllegalArgumentException("Incorrect pair. Form: \"-Key=Value\"");
         }
