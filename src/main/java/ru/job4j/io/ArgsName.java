@@ -17,8 +17,8 @@ public class ArgsName {
 
     private static boolean validation(String str) {
         str.trim();
-        if (!str.startsWith("-") || str.startsWith("-") && str.charAt(1) == '=' || str.startsWith("=")
-            || str.endsWith("=") && str.indexOf("=") == str.lastIndexOf("=") || !str.contains("=")) {
+        if (!str.startsWith("-") || !str.contains("=") || str.startsWith("-=") || str.startsWith("=")
+            || str.endsWith("=") && str.indexOf("=") == str.lastIndexOf("=")) {
             throw new IllegalArgumentException("Incorrect pair. Form: \"-Key=Value\"");
         }
         return true;
@@ -27,12 +27,7 @@ public class ArgsName {
     private void parse(String[] args) {
             Arrays.stream(args)
                     .filter(ArgsName::validation)
-                    .map(m -> {
-                        if (m.startsWith("-")) {
-                            m = m.substring(1);
-                        }
-                        return m;
-                    })
+                    .map(m -> m.substring(1))
                     .map(m -> m.split("=", 2))
                     .forEach(f -> values.put(f[0], f[1])
             );
