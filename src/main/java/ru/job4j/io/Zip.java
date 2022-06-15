@@ -34,9 +34,8 @@ public class Zip {
         }
     }
 
-    private boolean validation(String[] args) {
-        ArgsName argsName = ArgsName.of(args);
-        File path = new File(argsName.get("d"));
+    private void validation(String[] args, ArgsName argsMap) {
+        File path = new File(argsMap.get("d"));
         if (args.length != 3) {
             throw new IllegalArgumentException("Incorrent arguments amount. Required: 3. Use: -d=\"PATH\" -e=.EXTENSION -o=*.zip");
         }
@@ -46,13 +45,12 @@ public class Zip {
         if (!path.isDirectory()) {
             throw new IllegalArgumentException("Path is not a directory!");
         }
-        if (!argsName.get("e").startsWith(".")) {
+        if (!argsMap.get("e").startsWith(".")) {
             throw new IllegalArgumentException("Incorrect second parameter form. Use: \"-e=.EXTENSION\"");
         }
-        if (!argsName.get("o").endsWith(".zip")) {
+        if (!argsMap.get("o").endsWith(".zip")) {
             throw new IllegalArgumentException("Incorrect third parameter form. Use: \"-o=NAME.zip\"");
         }
-        return true;
     }
 
     public static void main(String[] args) throws IOException {
@@ -62,11 +60,10 @@ public class Zip {
                 new File("./pom.zip")
         );
         ArgsName map = ArgsName.of(args);
-        if (zip.validation(args)) {
-            Path path = Paths.get(map.get("d"));
-            List<Path> sources = Search.search(path, p -> !p.toFile().getName().endsWith(map.get("e")));
-            File out = Paths.get(map.get("o")).toFile();
-            zip.packFiles(sources, out);
-        }
+        zip.validation(args, map);
+        Path path = Paths.get(map.get("d"));
+        List<Path> sources = Search.search(path, p -> !p.toFile().getName().endsWith(map.get("e")));
+        File target = Paths.get(map.get("o")).toFile();
+        zip.packFiles(sources, target);
     }
 }
