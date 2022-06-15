@@ -1,11 +1,9 @@
 Hi
-Phrase 1
+Phrase 5
 continue
-Well
-Phrase 4
+Phrase 5
 stop
 Hi?
 continue
-Hi
-Phrase 1
+Phrase 2
 finish

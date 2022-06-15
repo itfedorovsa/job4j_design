@@ -26,19 +26,19 @@ public class ConsoleChat {
             do {
                 phrase = reader.readLine();
                 saveLog(phrase);
-                if (phrase.equals("stop")) {
+                if (STOP.equals(phrase)) {
                     isStopped = true;
                 }
-                if (phrase.equals("continue")) {
+                if (CONTINUE.equals(phrase)) {
                     isStopped = false;
-                    continue;
+                    //continue;
                 }
-                if (!isStopped && !phrase.equals("finish")) {
+                if (!isStopped && !OUT.equals(phrase)) {
                     String answer = readPhrases().get((int) (Math.random() * readPhrases().size()));
                     System.out.println(answer);
                     saveLog(answer);
                 }
-                } while (!phrase.equals("finish"));
+                } while (!OUT.equals(phrase));
             System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
