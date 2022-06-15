@@ -1,0 +1,11 @@
+Hi
+Phrase 1
+continue
+Well
+Phrase 4
+stop
+Hi?
+continue
+Hi
+Phrase 1
+finish
