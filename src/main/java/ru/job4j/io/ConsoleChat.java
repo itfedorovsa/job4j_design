@@ -31,7 +31,6 @@ public class ConsoleChat {
                 }
                 if (CONTINUE.equals(phrase)) {
                     isStopped = false;
-                    //continue;
                 }
                 if (!isStopped && !OUT.equals(phrase)) {
                     String answer = readPhrases().get((int) (Math.random() * readPhrases().size()));
