@@ -75,8 +75,7 @@ public class CSVReader {
     }
 
     public static void main(String[] args) throws IOException {
-        ArgsName argsName = ArgsName.of(new String[] {"-path=src/data/source.csv",
-                "-delimiter=;",  "-out=stdout", "-filter=brand,model,engine.vol"});
+        ArgsName argsName = ArgsName.of(args);
         handle(argsName);
     }
 }
