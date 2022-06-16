@@ -72,7 +72,8 @@ public class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[] {"-path=src/data/wrong.csv",
                 "-delimiter=;",  "-out=" + target.getAbsolutePath(), "-filter=brand,model,engine.vol"});
         File path = new File(argsName.get("path"));
-        CSVReader.validation(argsName, path);
+        File outPath = new File(argsName.get("out"));
+        CSVReader.validation(argsName, path, outPath);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -81,7 +82,8 @@ public class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
                 "-delimiter=;", "-filter=brand,model,engine.vol"});
         File path = new File(argsName.get("path"));
-        CSVReader.validation(argsName, path);
+        File outPath = new File(argsName.get("out"));
+        CSVReader.validation(argsName, path, outPath);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -90,7 +92,8 @@ public class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[] {"-path=src/data",
                 "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=brand,model,engine.vol"});
         File path = new File(argsName.get("path"));
-        CSVReader.validation(argsName, path);
+        File outPath = new File(argsName.get("out"));
+        CSVReader.validation(argsName, path, outPath);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -100,7 +103,8 @@ public class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
                 "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter="});
         File path = new File(argsName.get("path"));
-        CSVReader.validation(argsName, path);
+        File outPath = new File(argsName.get("out"));
+        CSVReader.validation(argsName, path, outPath);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -110,6 +114,7 @@ public class CSVReaderTest {
         ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
                 "-delimiter=;", "-out=src/data/wrong.csv", "-filter="});
         File path = new File(argsName.get("path"));
-        CSVReader.validation(argsName, path);
+        File outPath = new File(argsName.get("out"));
+        CSVReader.validation(argsName, path, outPath);
     }
 }

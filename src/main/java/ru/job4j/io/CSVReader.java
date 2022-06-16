@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class CSVReader {
-    public static void validation(ArgsName argsName, File path) {
+    public static void validation(ArgsName argsName, File path, File outPath) {
+        String stdout = outPath.toString();
         if (argsName.argsSize() != 4) {
             throw new IllegalArgumentException("Incorrect quantity of arguments. Required: 4");
         }
@@ -14,11 +15,18 @@ public class CSVReader {
         if (path.isDirectory()) {
             throw new IllegalArgumentException("Path must be a file!");
         }
+        if (!"stdout".equals(stdout) && !outPath.exists()) {
+            throw new IllegalArgumentException("Output path is not exist!");
+        }
+        if (!"stdout".equals(stdout) && outPath.isDirectory()) {
+            throw new IllegalArgumentException("Output path must be a file!");
+        }
     }
 
     public static void handle(ArgsName argsName) throws IOException {
         File path = new File(argsName.get("path"));
-        validation(argsName, path);
+        File outPath = new File(argsName.get("out"));
+        validation(argsName, path, outPath);
         String out = argsName.get("out");
         if ("stdout".equals(out)) {
             List<String> lines = transform(argsName, path);
@@ -26,7 +34,6 @@ public class CSVReader {
                 System.out.println(line);
             }
         } else {
-            File outPath = new File(argsName.get("out"));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPath))) {
                 List<String> lines = transform(argsName, path);
                 for (String line : lines) {
