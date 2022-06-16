@@ -15,6 +15,10 @@ public class ArgsName {
         return values.get(key);
     }
 
+    public int argsSize() {
+        return values.size();
+    }
+
     private static boolean validation(String str) {
         str.trim();
         if (!str.startsWith("-") || !str.contains("=") || str.startsWith("-=")
