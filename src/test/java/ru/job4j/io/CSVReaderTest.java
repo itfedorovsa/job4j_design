@@ -73,7 +73,8 @@ public class CSVReaderTest {
                 "-delimiter=;",  "-out=" + target.getAbsolutePath(), "-filter=brand,model,engine.vol"});
         File path = new File(argsName.get("path"));
         File outPath = new File(argsName.get("out"));
-        CSVReader.validation(argsName, path, outPath);
+        String delimiter = argsName.get("delimiter");
+        CSVReader.validation(argsName, path, outPath, delimiter);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -83,7 +84,8 @@ public class CSVReaderTest {
                 "-delimiter=;", "-filter=brand,model,engine.vol"});
         File path = new File(argsName.get("path"));
         File outPath = new File(argsName.get("out"));
-        CSVReader.validation(argsName, path, outPath);
+        String delimiter = argsName.get("delimiter");
+        CSVReader.validation(argsName, path, outPath, delimiter);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -93,7 +95,8 @@ public class CSVReaderTest {
                 "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=brand,model,engine.vol"});
         File path = new File(argsName.get("path"));
         File outPath = new File(argsName.get("out"));
-        CSVReader.validation(argsName, path, outPath);
+        String delimiter = argsName.get("delimiter");
+        CSVReader.validation(argsName, path, outPath, delimiter);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -104,7 +107,8 @@ public class CSVReaderTest {
                 "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter="});
         File path = new File(argsName.get("path"));
         File outPath = new File(argsName.get("out"));
-        CSVReader.validation(argsName, path, outPath);
+        String delimiter = argsName.get("delimiter");
+        CSVReader.validation(argsName, path, outPath, delimiter);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -115,6 +119,19 @@ public class CSVReaderTest {
                 "-delimiter=;", "-out=src/data/wrong.csv", "-filter="});
         File path = new File(argsName.get("path"));
         File outPath = new File(argsName.get("out"));
-        CSVReader.validation(argsName, path, outPath);
+        String delimiter = argsName.get("delimiter");
+        CSVReader.validation(argsName, path, outPath, delimiter);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenIncorrectDelimiterThenIllegalArgumentException() throws IOException {
+        File source = temporaryFolder.newFile("source.csv");
+        File target = temporaryFolder.newFile("target.csv");
+        ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
+                "-delimiter=,", "-out=src/data/wrong.csv", "-filter="});
+        File path = new File(argsName.get("path"));
+        File outPath = new File(argsName.get("out"));
+        String delimiter = argsName.get("delimiter");
+        CSVReader.validation(argsName, path, outPath, delimiter);
     }
 }

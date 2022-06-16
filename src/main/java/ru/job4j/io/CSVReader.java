@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class CSVReader {
-    public static void validation(ArgsName argsName, File path, File outPath) {
+    public static void validation(ArgsName argsName, File path, File outPath, String delimiter) {
         String stdout = outPath.toString();
         if (argsName.argsSize() != 4) {
             throw new IllegalArgumentException("Incorrect quantity of arguments. Required: 4");
@@ -15,27 +15,25 @@ public class CSVReader {
         if (path.isDirectory()) {
             throw new IllegalArgumentException("Path must be a file!");
         }
-        if (!"stdout".equals(stdout) && !outPath.exists()) {
-            throw new IllegalArgumentException("Output path is not exist!");
-        }
-        if (!"stdout".equals(stdout) && outPath.isDirectory()) {
-            throw new IllegalArgumentException("Output path must be a file!");
+        if (!";".equals(delimiter)) {
+            throw new IllegalArgumentException("Delimiter must be \";\"!");
         }
     }
 
     public static void handle(ArgsName argsName) throws IOException {
         File path = new File(argsName.get("path"));
         File outPath = new File(argsName.get("out"));
-        validation(argsName, path, outPath);
+        String delimiter = argsName.get("delimiter");
+        validation(argsName, path, outPath, delimiter);
         String out = argsName.get("out");
         if ("stdout".equals(out)) {
-            List<String> lines = transform(argsName, path);
+            List<String> lines = transform(argsName, path, delimiter);
             for (String line : lines) {
                 System.out.println(line);
             }
         } else {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outPath))) {
-                List<String> lines = transform(argsName, path);
+                List<String> lines = transform(argsName, path, delimiter);
                 for (String line : lines) {
                     writer.write(line);
                     writer.write(System.lineSeparator());
@@ -46,9 +44,8 @@ public class CSVReader {
         }
     }
 
-    public static List<String> transform(ArgsName argsName, File path) throws IOException {
+    public static List<String> transform(ArgsName argsName, File path, String delimiter) throws IOException {
         List<String> result = new ArrayList<>();
-        String delimiter = argsName.get("delimiter");
         String[] filter = argsName.get("filter").split(",");
         String[] fields;
         StringJoiner line = new StringJoiner(delimiter);
