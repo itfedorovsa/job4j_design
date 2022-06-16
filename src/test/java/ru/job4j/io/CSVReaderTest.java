@@ -65,4 +65,51 @@ public class CSVReaderTest {
         CSVReader.handle(argsName);
         Assert.assertEquals(expected, Files.readString(target.toPath()));
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenPathIsNotExistThenIllegalArgumentException() throws IOException {
+        File target = temporaryFolder.newFile("target.csv");
+        ArgsName argsName = ArgsName.of(new String[] {"-path=src/data/wrong.csv",
+                "-delimiter=;",  "-out=" + target.getAbsolutePath(), "-filter=brand,model,engine.vol"});
+        File path = new File(argsName.get("path"));
+        CSVReader.validation(argsName, path);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenIncorrectAmountOfArgsThenIllegalArgumentException() throws IOException {
+        File source = temporaryFolder.newFile("source.csv");
+        ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
+                "-delimiter=;", "-filter=brand,model,engine.vol"});
+        File path = new File(argsName.get("path"));
+        CSVReader.validation(argsName, path);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenPathIsADirectoryThenIllegalArgumentException() throws IOException {
+        File target = temporaryFolder.newFile("target.csv");
+        ArgsName argsName = ArgsName.of(new String[] {"-path=src/data",
+                "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=brand,model,engine.vol"});
+        File path = new File(argsName.get("path"));
+        CSVReader.validation(argsName, path);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenIncorrectKeyThenIllegalArgumentException() throws IOException {
+        File source = temporaryFolder.newFile("source.csv");
+        File target = temporaryFolder.newFile("target.csv");
+        ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
+                "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter="});
+        File path = new File(argsName.get("path"));
+        CSVReader.validation(argsName, path);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenOutputPathIsNotExistThenIllegalArgumentException() throws IOException {
+        File source = temporaryFolder.newFile("source.csv");
+        File target = temporaryFolder.newFile("target.csv");
+        ArgsName argsName = ArgsName.of(new String[] {"-path=" + source.getAbsolutePath(),
+                "-delimiter=;", "-out=src/data/wrong.csv", "-filter="});
+        File path = new File(argsName.get("path"));
+        CSVReader.validation(argsName, path);
+    }
 }
