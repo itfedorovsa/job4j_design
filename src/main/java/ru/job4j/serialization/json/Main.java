@@ -5,14 +5,9 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
     public static void main(String[] args) {
-        final Person person = new Person(false, 30, new Contact("11-111"),
-                new String[] {"Worker", "Married"});
-
-        /* Преобразуем объект person в json-строку. */
+        final Person person = new Person(false, 30, new Contact("11-111"), "Worker", "Married");
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(person));
-
-        /* Модифицируем json-строку */
         final String personJson =
                 "{"
                         + "\"sex\":false,"
