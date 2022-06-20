@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<storage type="building tools" capacity="1000" isFull="false">
+    <phone phone="111-333"/>
+    <goods>
+        <good>Saw</good>
+        <good>Hammer</good>
+    </goods>
+</storage>
