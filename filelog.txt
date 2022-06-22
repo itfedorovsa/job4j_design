@@ -1,0 +1,10 @@
+c:\projects\algorithms\pom.xml
+c:\projects\games_oop_javafx\chess\pom.xml
+c:\projects\games_oop_javafx\packman\pom.xml
+c:\projects\games_oop_javafx\pom.xml
+c:\projects\games_oop_javafx\puzzle\pom.xml
+c:\projects\games_oop_javafx\seabattle\pom.xml
+c:\projects\games_oop_javafx\tictactoe\pom.xml
+c:\projects\job4j_design\pom.xml
+c:\projects\job4j_elementary\pom.xml
+c:\projects\job4j_tracker\pom.xml
