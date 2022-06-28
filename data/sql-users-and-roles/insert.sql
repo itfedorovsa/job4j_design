@@ -22,7 +22,10 @@ insert into comments(comment) values ('maybe');
 insert into attachs(attach) values ('failure.png');
 insert into attachs(attach) values ('CanonMF3010.doc');
 insert into attachs(attach) values ('MyWish.txt');
-insert into roles_rules(name) values('AdminAcc');
-insert into roles_rules(name) values('EmployeeAcc');
-insert into roles_rules(name) values('GuestAcc');
+insert into roles_rules(name, role_id, rule_id) values('AdminAcc', 1, 1);
+insert into roles_rules(name, role_id, rule_id) values('AdminAcc', 1, 2);
+insert into roles_rules(name, role_id, rule_id) values('AdminAcc', 1, 3);
+insert into roles_rules(name, role_id, rule_id) values('EmployeeAcc', 2, 2);
+insert into roles_rules(name, role_id, rule_id) values('EmployeeAcc', 2, 3);
+insert into roles_rules(name, role_id, rule_id) values('GuestAcc', 3, 3);
 
