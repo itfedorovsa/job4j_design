@@ -12,9 +12,9 @@ create table product(
 );
 
 insert into type(name) values ('cheese'), ('milk'), ('bread');
-insert into product(name, type_id, expired_date, price) values ('tofu', 1, '2022-06-22', 5.5);
+insert into product(name, type_id, expired_date, price) values ('tofu', 1, '2022-06-22', 15.2);
 insert into product(name, type_id, expired_date, price) values ('feta', 1, '2022-07-22', 15.2);
-insert into product(name, type_id, expired_date, price) values ('big ice-cream', 2, '2022-07-22', 10.7);
+insert into product(name, type_id, expired_date, price) values ('big ice-cream', 2, '2022-07-22', 15.2);
 insert into product(name, type_id, expired_date, price) values ('bun', 3, '2022-06-22', 3.3);
 
 select * from product as p
@@ -28,7 +28,8 @@ where name like '%ice-cream%';
 select * from product
 where current_date > expired_date;
 
-select max(price) from product; 
+select * from product p
+where p.price = (select max(p1.price) from product p1);
 
 select t.name, count(p.type_id) from product p
 join type t
