@@ -46,4 +46,5 @@ where c.id is null;
 
 select g.gear from car c
 full join gearbox g
-on g.car_id = c.id;
+on g.car_id = c.id
+where c.id is null;
