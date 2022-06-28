@@ -1,0 +1,50 @@
+create table departments(
+    id serial primary key,
+    name varchar(255)
+);
+
+create table employees(
+    id serial primary key,
+    name varchar(255),
+    department_id int references departments(id)
+);
+
+insert into departments(name) values ('manager'), ('worker'), ('trainee');
+insert into employees(name, department_id) values ('Tom', 1), ('Bob', 2), ('Jack', 2), ('John', null);
+
+select * from employees e
+left join departments d
+on e.department_id = d.id;
+
+select * from employees e
+right join departments d
+on e.department_id = d.id;
+
+select * from employees e
+full join departments d
+on e.department_id = d.id;
+
+select * from employees e
+cross join departments d;
+
+select * from departments d
+left join employees e
+on e.department_id = d.id
+where e.department_id is not null;
+
+select * from departments d
+right join employees e
+on e.department_id = d.id
+where e.department_id is not null;
+
+create table teens(
+    id serial primary key,
+    name varchar(255),
+    gender varchar(255)
+);
+
+insert into teens(name, gender) values ('Alice', 'F'), ('Sarah', 'F');
+insert into teens(name, gender) values ('Bob', 'M'), ('Bill', 'M'), ('Joe', 'M');
+
+select * from teens t1 cross join teens t2
+where t1.gender = 'M' and t2.gender = 'F';
