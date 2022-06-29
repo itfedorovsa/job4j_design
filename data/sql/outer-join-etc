@@ -30,6 +30,11 @@ cross join departments d;
 select * from departments d
 left join employees e
 on e.department_id = d.id
+where e.department_id is null;
+
+select * from departments d
+left join employees e
+on e.department_id = d.id
 where e.department_id is not null;
 
 select * from departments d
