@@ -11,17 +11,17 @@ public class TableEditor implements AutoCloseable {
 
     private Properties properties;
 
+    public TableEditor(Properties properties) throws ClassNotFoundException, SQLException {
+        this.properties = properties;
+        initConnection();
+    }
+
     private void initConnection() throws ClassNotFoundException, SQLException {
         Class.forName(properties.getProperty("hibernate.connection.driver_class"));
         String url = properties.getProperty("hibernate.connection.url");
         String login = properties.getProperty("hibernate.connection.username");
         String password = properties.getProperty("hibernate.connection.password");
         connection = DriverManager.getConnection(url, login, password);
-    }
-
-    public TableEditor(Properties properties) throws ClassNotFoundException, SQLException {
-        this.properties = properties;
-        initConnection();
     }
 
     private void execute(String sql, String tableName) throws Exception {
@@ -37,36 +37,25 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void dropTable(String tableName) throws Exception {
-        try (Statement state = connection.createStatement()) {
-            String sql = String.format("drop table %s;", tableName);
-            state.execute(sql);
+        String sql = String.format("drop table %s;", tableName);
+        if (!sql.startsWith("drop")) {
+            execute(sql, tableName);
         }
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
-        try (Statement state = connection.createStatement()) {
-            String sql = String.format("alter table %s add column %s %s;", tableName, columnName, type);
-            state.execute(sql);
-            System.out.println(getTableScheme(connection, tableName));
-        }
+        String sql = String.format("alter table %s add column %s %s;", tableName, columnName, type);
+        execute(sql, tableName);
     }
 
     public void dropColumn(String tableName, String columnName) throws Exception {
-        try (Statement state = connection.createStatement()) {
-            String sql = String.format("alter table %s drop %s;", tableName, columnName);
-            state.execute(sql);
-            System.out.println(getTableScheme(connection, tableName));
-        }
+        String sql = String.format("alter table %s drop %s;", tableName, columnName);
+        execute(sql, tableName);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
-        try (Statement state = connection.createStatement()) {
-            String sql = String.format(
-                    "alter table %s rename column %s to %s;", tableName, columnName, newColumnName
-            );
-            state.execute(sql);
-            System.out.println(getTableScheme(connection, tableName));
-        }
+        String sql = String.format("alter table %s rename column %s to %s;", tableName, columnName, newColumnName);
+        execute(sql, tableName);
     }
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
@@ -96,22 +85,22 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        String path = "idea_db.properties";
         Properties properties = new Properties();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            properties.load(reader);
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("idea_db.properties")) {
+            properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TableEditor editor = new TableEditor(properties);
-        String tableName = "tab";
-        String columnName = "col";
-        String newColumnName = "newcol";
-        String type = "varchar(255)";
-        editor.createTable(tableName);
-        editor.addColumn(tableName, columnName, type);
-        editor.renameColumn(tableName, columnName, newColumnName);
-        editor.dropColumn(tableName, newColumnName);
-        editor.dropTable(tableName);
+        try (TableEditor editor = new TableEditor(properties)) {
+            String tableName = "tab";
+            String columnName = "col";
+            String newColumnName = "newcol";
+            String type = "varchar(255)";
+            editor.createTable(tableName);
+            editor.addColumn(tableName, columnName, type);
+            editor.renameColumn(tableName, columnName, newColumnName);
+            editor.dropColumn(tableName, newColumnName);
+            editor.dropTable(tableName);
+        }
     }
 }
