@@ -4,6 +4,8 @@ import java.io.*;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TableEditor implements AutoCloseable {
 
@@ -27,7 +29,9 @@ public class TableEditor implements AutoCloseable {
     private void execute(String sql, String tableName) throws Exception {
         try (Statement state = connection.createStatement()) {
             state.execute(sql);
+            if (!sql.startsWith("drop")) {
             System.out.println(getTableScheme(connection, tableName));
+            }
         }
     }
 
@@ -38,9 +42,8 @@ public class TableEditor implements AutoCloseable {
 
     public void dropTable(String tableName) throws Exception {
         String sql = String.format("drop table %s;", tableName);
-        if (!sql.startsWith("drop")) {
-            execute(sql, tableName);
-        }
+        execute(sql, tableName);
+
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
@@ -92,7 +95,7 @@ public class TableEditor implements AutoCloseable {
             e.printStackTrace();
         }
         try (TableEditor editor = new TableEditor(properties)) {
-            String tableName = "tab";
+            String tableName = "tab1";
             String columnName = "col";
             String newColumnName = "newcol";
             String type = "varchar(255)";
