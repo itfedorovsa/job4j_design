@@ -29,7 +29,7 @@ public class TableEditor implements AutoCloseable {
     private void execute(String sql, String tableName) throws Exception {
         try (Statement state = connection.createStatement()) {
             state.execute(sql);
-            if (!sql.startsWith("drop")) {
+            if (!sql.startsWith(String.format("drop table %s", tableName))) {
             System.out.println(getTableScheme(connection, tableName));
             }
         }
