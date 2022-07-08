@@ -1,53 +1,54 @@
-create table type(
-    id serial primary key,
+CREATE TABLE type(
+    id SERIAL PRIMARY KEY,
     name varchar(255)
 );
 
-create table product(
-    id serial primary key,
+CREATE TABLE product(
+    id SERIAL PRIMARY KEY,
     name varchar(255),
-    type_id int references type(id),
+    type_id int REFERENCES type(id),
     expired_date date,
     price float
 );
 
-insert into type(name) values ('cheese'), ('milk'), ('bread');
-insert into product(name, type_id, expired_date, price) values ('tofu', 1, '2022-06-22', 15.2);
-insert into product(name, type_id, expired_date, price) values ('feta', 1, '2022-07-22', 15.2);
-insert into product(name, type_id, expired_date, price) values ('big ice-cream', 2, '2022-07-22', 15.2);
-insert into product(name, type_id, expired_date, price) values ('bun', 3, '2022-06-22', 3.3);
+INSERT INTO type(name) VALUES ('cheese'), ('milk'), ('bread');
+INSERT INTO product(name, type_id, expired_date, price) VALUES ('tofu', 1, '2022-06-22', 15.2);
+INSERT INTO product(name, type_id, expired_date, price) VALUES ('feta', 1, '2022-07-22', 15.2);
+INSERT INTO product(name, type_id, expired_date, price) VALUES ('big ice-cream', 2, '2022-07-22', 15.2);
+INSERT INTO product(name, type_id, expired_date, price) VALUES ('bun', 3, '2022-06-22', 3.3);
 
-select * from product as p
-join type as t
-on p.type_id = t.id
-where t.name = 'cheese';
+SELECT * FROM product AS p
+JOIN type AS t
+ON p.type_id = t.id
+WHERE t.name = 'cheese';
 
-select * from product
-where name like '%ice-cream%';
+SELECT * FROM product
+WHERE name LIKE '%ice-cream%';
 
-select * from product
-where current_date > expired_date;
+SELECT * FROM product
+WHERE current_date > expired_date;
 
-select * from product p
-where p.price = (select max(p1.price) from product p1);
+SELECT * FROM product p
+WHERE p.price = (SELECT max(p1.price) FROM product p1);
 
-select t.name, count(p.type_id) from product p
-join type t
-on p.type_id = t.id
-group by t.name;
+SELECT t.name, count(p.type_id) FROM product p
+JOIN type t
+ON p.type_id = t.id
+GROUP BY t.name;
 
-select * from product p
-join type t
-on p.type_id = t.id
-where t.name = 'cheese' or t.name = 'milk';
+SELECT * FROM product p
+JOIN type t
+ON p.type_id = t.id
+WHERE t.name = 'cheese' OR t.name = 'milk';
 
-select t.name, count(p.type_id) 
-from product p
-join type t
-on p.type_id = t.id
-group by t.name
-having count(p.type_id) < 10;
+SELECT t.name, count(p.type_id)
+FROM product p
+JOIN type t
+ON p.type_id = t.id
+GROUP BY t.name
+HAVING count(p.type_id) < 10;
 
-select p.name, p.type_id, p.expired_date, p.price, t.name type from product p
-join type t
-on p.type_id = t.id;
+SELECT p.name, p.type_id, p.expired_date, p.price, t.name type
+FROM product p
+JOIN type t
+ON p.type_id = t.id;

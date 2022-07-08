@@ -1,15 +1,15 @@
-create table apps(
-  id serial primary key,
+CREATE TABLE apps(
+  id SERIAL PRIMARY KEY,
   name varchar(255)
 );
 
-create table programmists(
-    id serial primary key,
+CREATE TABLE programmists(
+    id SERIAL PRIMARY KEY,
     name varchar(255)
 );
 
-create table programmist_apps(
-    id serial primary key,
-    app_id int references apps(id),
-    programmist_id int references programmists(id)
+CREATE TABLE programmist_apps(
+    id SERIAL PRIMARY KEY,
+    app_id int REFERENCES apps(id),
+    programmist_id int REFERENCES programmists(id)
 );
