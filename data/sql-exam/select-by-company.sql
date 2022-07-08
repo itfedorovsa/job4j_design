@@ -22,7 +22,7 @@ SELECT p.name person, c.name company
 FROM person p
 JOIN company c
 ON p.company_id = c.id
-WHERE c.id != 5
+WHERE c.id != 5;
     
 SELECT c.name company, count(p.company_id) people
 FROM person p
@@ -33,7 +33,7 @@ HAVING count(p.company_id) = (
     SELECT count(company_id)
     FROM person
     GROUP BY company_id
-    ORDER BY count(company_id) desc
+    ORDER BY count(company_id) DESC
     LIMIT 1
 );
 
