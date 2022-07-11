@@ -43,20 +43,22 @@ SELECT count(o.active), s.name student_name, b.name book_name, a.name author_nam
          JOIN books b ON o.book_id = b.id
          JOIN authors a ON b.author_id = a.id
          WHERE s.name LIKE '%Tony%' AND a.name != 'Stephen King'
-         GROUP BY s.name student_name, b.name book_name, a.name author_name;
+         GROUP BY s.name, b.name, a.name;
 
 SELECT s.name AS student, a.name, a.name author FROM students s
-JOIN orders o ON s.id = o.student_id
-JOIN books b ON o.book_id = b.id
-JOIN authors a ON b.author_id = a.id
-GROUP BY (s.name, a.name) having count(a.name) >= 2
+    JOIN orders o ON s.id = o.student_id
+    JOIN books b ON o.book_id = b.id
+    JOIN authors a ON b.author_id = a.id
+    GROUP BY (s.name, a.name)
+    HAVING COUNT(a.name) >= 2;
 
 CREATE VIEW show_students_with_2_or_more_books
     AS SELECT s.name AS student, count(a.name), a.name AS author FROM students AS s
          JOIN orders o ON s.id = o.student_id
          JOIN books b ON o.book_id = b.id
          JOIN authors a ON b.author_id = a.id
-         GROUP BY (s.name, a.name) having count(a.name) >= 2;
+         GROUP BY (s.name, a.name)
+         HAVING COUNT(a.name) >= 2;
 
 CREATE VIEW show_students_with_many_conditions
     AS SELECT o.active, s.name student_name, b.name book_name, a.name author_name FROM students s
