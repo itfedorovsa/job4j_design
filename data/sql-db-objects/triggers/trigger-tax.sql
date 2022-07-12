@@ -7,7 +7,7 @@ CREATE TABLE products (
 );
 
 CREATE OR REPLACE FUNCTION tax()
-    returns TRIGGER AS
+    RETURNS TRIGGER AS
 $$
     BEGIN
         UPDATE products
