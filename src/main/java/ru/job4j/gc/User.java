@@ -20,7 +20,6 @@ public class User {
 
     @Override
     protected void finalize() throws Throwable {
-        //super.finalize();
         System.out.printf("Removed %s %d %d%n", name, age, id);
     }
 
