@@ -11,7 +11,8 @@ CREATE OR REPLACE FUNCTION tax()
 $$
     BEGIN
         UPDATE products
-        SET price = price * 1.2;
+        SET price = price * 1.2
+        WHERE id = (SELECT id FROM inserted);
         RETURN NEW;
     END;
 $$
@@ -20,7 +21,8 @@ LANGUAGE 'plpgsql';
 CREATE TRIGGER tax_trigger
     AFTER INSERT
     ON products
-    FOR STATEMENT
+    REFERENCING NEW TABLE AS inserted
+    FOR EACH STATEMENT
     EXECUTE PROCEDURE tax();
 
 INSERT INTO products (name, producer, count, price) VALUES ('product_3', 'producer_3', 8, 115);

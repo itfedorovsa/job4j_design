@@ -6,27 +6,24 @@ CREATE TABLE products (
     price integer
 );
 
-CREATE OR REPLACE FUNCTION discount()
+CREATE OR REPLACE FUNCTION tax()
     RETURNS TRIGGER AS
 $$
     BEGIN
         UPDATE products
         SET price = price - price * 0.2
-        WHERE count <= 5;
+        WHERE id = (SELECT id FROM INSERTED) AND count <= 5;
         RETURN NEW;
     END;
 $$
 LANGUAGE 'plpgsql';
 
-CREATE TRIGGER discount_trigger
+CREATE TRIGGER tax_trigger
     AFTER INSERT
     ON products
-    FOR EACH ROW
-    EXECUTE PROCEDURE discount();
+    REFERENCING NEW TABLE AS inserted
+    FOR EACH STATEMENT
+    EXECUTE PROCEDURE tax();
 
 INSERT INTO products (name, producer, count, price) VALUES ('product_3', 'producer_3', 8, 115);
 INSERT INTO products (name, producer, count, price) VALUES ('product_1', 'producer_1', 3, 50);
-
-ALTER TABLE products DISABLE TRIGGER discount_trigger;
-
-DROP TRIGGER discount_trigger ON products;
