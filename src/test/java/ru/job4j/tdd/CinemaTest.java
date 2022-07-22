@@ -47,7 +47,7 @@ public class CinemaTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2022, 07, 20, 23, 00);
+        date.set(2022, 02, 31, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
@@ -69,6 +69,16 @@ public class CinemaTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2022, 10, 10, 23, 00);
-        Ticket ticket = cinema.buy(account, 25, 25, date);
+        Ticket ticket = cinema.buy(account, -1, 1, date);
+    }
+
+    @Ignore
+    @Test (expected = IllegalArgumentException.class)
+    public void whenSeatIsUnreal() {
+        Account account = new AccountCinema();
+        Cinema cinema = new Cinema3D();
+        Calendar date = Calendar.getInstance();
+        date.set(2022, 10, 10, 23, 00);
+        Ticket ticket = cinema.buy(account, 250, 25, date);
     }
 }
