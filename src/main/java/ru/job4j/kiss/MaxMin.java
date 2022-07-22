@@ -5,22 +5,23 @@ import java.util.List;
 
 public class MaxMin {
 
-    private <T> List<T> sort(List<T> value, Comparator<T> comparator) {
+    private <T> T calculate(List<T> value, Comparator<T> comparator) {
         if (value.isEmpty()) {
-                throw new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
-        value.sort(comparator);
-        return value;
+        T rsl = value.get(0);
+        for (T v : value) {
+            rsl = comparator.compare(rsl, v) > 0 ? rsl : v;
+        }
+        return rsl;
     }
 
     public <T> T max(List<T> value, Comparator<T> comparator) {
-        List<T> list = sort(value, comparator);
-        return list.get(list.size() - 1);
+        return calculate(value, comparator);
     }
 
     public <T> T min(List<T> value, Comparator<T> comparator) {
-        List<T> list = sort(value, comparator);
-        return list.get(0);
+        return calculate(value, comparator.reversed());
     }
 
 }
