@@ -63,7 +63,7 @@ public class ReportEngineTest {
                 .append(worker.getName()).append("; ")
                 .append(DATE_FORMAT.format(worker.getHired().getTime())).append("; ")
                 .append(DATE_FORMAT.format(worker.getFired().getTime())).append("; ")
-                .append(worker.getSalary() * 1.1).append("; ")
+                .append(worker.getSalary() * ReportEngineAccountants.CONVERT_USD_TO_EUR).append("; ")
                 .append(System.lineSeparator());
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }

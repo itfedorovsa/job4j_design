@@ -15,8 +15,7 @@ public class ReportEngineHR implements Report {
     }
 
     private List<Employee> descSort(List<Employee> employees) {
-        Comparator<Employee> compareBySalary = Comparator.comparing(Employee::getSalary, Comparator.reverseOrder());
-        employees.sort(compareBySalary);
+        employees.sort(Comparator.comparingDouble(Employee::getSalary).reversed());
         return employees;
     }
 

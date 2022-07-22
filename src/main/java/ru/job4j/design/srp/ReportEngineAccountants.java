@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 public class ReportEngineAccountants implements Report {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
+    public static final float CONVERT_USD_TO_EUR = 1.1f;
 
     private Store store;
 
@@ -21,7 +22,7 @@ public class ReportEngineAccountants implements Report {
             text.append(employee.getName()).append("; ")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append("; ")
                     .append(DATE_FORMAT.format(employee.getFired().getTime())).append("; ")
-                    .append(employee.getSalary() * 1.1).append("; ")
+                    .append(employee.getSalary() * CONVERT_USD_TO_EUR).append("; ")
                     .append(System.lineSeparator());
         }
         return text.toString();
