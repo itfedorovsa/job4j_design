@@ -10,6 +10,9 @@ public class Employee implements Comparator<Employee> {
     private Calendar fired;
     private double salary;
 
+    public Employee() {
+    }
+
     public Employee(String name, double salary) {
         this.name = name;
         this.salary = salary;

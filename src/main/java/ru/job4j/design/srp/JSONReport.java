@@ -1,17 +1,18 @@
 package ru.job4j.design.srp;
 
-import jdk.swing.interop.SwingInterOpUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.function.Predicate;
 
-public class ReportEngine implements Report {
+public class JSONReport implements Report {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
     private Store store;
 
-    public ReportEngine(Store store) {
+    public JSONReport(Store store) {
         this.store = store;
     }
 
@@ -27,7 +28,8 @@ public class ReportEngine implements Report {
                     .append(employee.getSalary()).append("; ")
                     .append(System.lineSeparator());
         }
-        return text.toString();
+        final String report = text.toString();
+        final Gson gson = new GsonBuilder().create();
+        return gson.toJson(report);
     }
-
 }
