@@ -3,12 +3,9 @@ package ru.job4j.design.srp;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.function.Predicate;
 
 public class XMLReport implements Report {
-
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
     private Store store;
 

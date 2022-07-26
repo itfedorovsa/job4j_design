@@ -4,8 +4,6 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static ru.job4j.design.srp.ReportEngine.DATE_FORMAT;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -117,29 +115,36 @@ public class ReportEngineTest {
     public void whenJSONReport() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd:MM:yyyy HH:mm");
-        Employee worker1 = new Employee("John", now, now, 100);
-        Employee worker2 = new Employee("Jade", now, now, 200);
-        store.add(worker1);
-        store.add(worker2);
+        Employee worker = new Employee("John", now, now, 100);
+        store.add(worker);
         Report engine = new JSONReport(store);
-        StringBuilder expect = new StringBuilder()
-                .append("Name; Hired; Fired; Salary;")
-                .append(System.lineSeparator())
-                .append(worker1.getName()).append("; ")
-                .append(format.format(worker1.getHired().getTime())).append("; ")
-                .append(format.format(worker1.getFired().getTime())).append("; ")
-                .append(worker1.getSalary()).append("; ")
-                .append(System.lineSeparator())
-                .append(worker2.getName()).append("; ")
-                .append(format.format(worker2.getHired().getTime())).append("; ")
-                .append(format.format(worker2.getFired().getTime())).append("; ")
-                .append(worker2.getSalary()).append("; ")
-                .append(System.lineSeparator());
-        final String report = expect.toString();
-        final Gson gson = new GsonBuilder().create();
-        String result = gson.toJson(report);
-        assertThat(engine.generate(em -> true), is(result));
+        StringBuilder expected = new StringBuilder()
+                .append("[{\"name\":\"John\",\"hired\":{\"year\":")
+                .append(worker.getHired().get(Calendar.YEAR))
+                .append(",").append("\"month\":")
+                .append(worker.getHired().get(Calendar.MONTH))
+                .append(",").append("\"dayOfMonth\":")
+                .append(worker.getHired().get(Calendar.DAY_OF_MONTH))
+                .append(",").append("\"hourOfDay\":")
+                .append(worker.getHired().get(Calendar.HOUR_OF_DAY))
+                .append(",").append("\"minute\":")
+                .append(worker.getHired().get(Calendar.MINUTE))
+                .append(",").append("\"second\":")
+                .append(worker.getHired().get(Calendar.SECOND))
+                .append("},").append("\"fired\":{\"year\":")
+                .append(worker.getHired().get(Calendar.YEAR))
+                .append(",").append("\"month\":")
+                .append(worker.getHired().get(Calendar.MONTH))
+                .append(",").append("\"dayOfMonth\":")
+                .append(worker.getHired().get(Calendar.DAY_OF_MONTH))
+                .append(",").append("\"hourOfDay\":")
+                .append(worker.getHired().get(Calendar.HOUR_OF_DAY))
+                .append(",").append("\"minute\":")
+                .append(worker.getHired().get(Calendar.MINUTE))
+                .append(",").append("\"second\":")
+                .append(worker.getHired().get(Calendar.SECOND))
+                .append("},").append("\"salary\":100.0}]");
+        assertThat(engine.generate(em -> true), is(expected.toString()));
     }
 
 }
