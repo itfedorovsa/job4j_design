@@ -1,6 +1,6 @@
 package ru.job4j.ood.lsp.parking;
 
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.is;
 public class SimpleParkingTest {
     SimpleParking parking;
 
+    @Ignore
     @Test
     public void whenCarParks() {
         parking = new SimpleParking(1, 1);
@@ -20,6 +21,7 @@ public class SimpleParkingTest {
         assertThat(expected.get(0).getLicensePlate(), is("CCC333"));
     }
 
+    @Ignore
     @Test
     public void whenAnyTruckParksInTruckLot() {
         parking = new SimpleParking(1, 1);
@@ -28,6 +30,7 @@ public class SimpleParkingTest {
         assertThat(expected.get(0).getLicensePlate(), is("TTT333"));
     }
 
+    @Ignore
     @Test (expected = IllegalArgumentException.class)
     public void whenTwoCarsParksButOnlyOnePlace() {
         parking = new SimpleParking(1, 1);
@@ -35,6 +38,7 @@ public class SimpleParkingTest {
         parking.park(new Car(Car.CAR_TYPE, Car.CAR_SIZE, "CCC111"));
     }
 
+    @Ignore
     @Test (expected = IllegalArgumentException.class)
     public void whenTwoTrucksParksButOnlyOnePlace() {
         parking = new SimpleParking(1, 1);
@@ -42,6 +46,7 @@ public class SimpleParkingTest {
         parking.park(new Truck(Truck.TRUCK_TYPE, Truck.TRUCK_SIZE, "TTT111"));
     }
 
+    @Ignore
     @Test
     public void whenTwoTrucksParksInTruckLotAndSeveralCarLot() {
         parking = new SimpleParking(2, 1);
