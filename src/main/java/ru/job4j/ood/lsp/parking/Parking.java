@@ -9,5 +9,4 @@ public interface Parking {
 
     Vehicle getVehicle(String licensePlate);
 
-    boolean check(Vehicle vehicle);
 }
