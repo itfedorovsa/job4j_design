@@ -1,11 +1,11 @@
 package ru.job4j.ood.lsp.parking;
 
 public class Car extends Vehicle {
-    private static final int CAR_SIZE = 1;
-    private static final String CAR_TYPE = "Car";
+    public static final int CAR_SIZE = 1;
+    public static final String CAR_TYPE = "Car";
 
     public Car(String type, int size, String licensePlate) {
-        super(CAR_TYPE, CAR_SIZE, licensePlate);
+        super(type, size, licensePlate);
     }
 
     @Override
@@ -22,4 +22,5 @@ public class Car extends Vehicle {
     public String getLicensePlate() {
         return super.getLicensePlate();
     }
+
 }

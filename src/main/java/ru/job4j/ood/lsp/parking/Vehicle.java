@@ -22,4 +22,13 @@ public class Vehicle {
     public String getLicensePlate() {
         return licensePlate;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle{"
+                + "type='" + type + '\''
+                + ", size=" + size
+                + ", licensePlate='" + licensePlate + '\''
+                + '}';
+    }
 }

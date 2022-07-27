@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleParking implements Parking {
-    private int[] carLots;
-    private int[] truckLots;
+    private int carLots;
+    private int truckLots;
     private final List<Vehicle> vehiclesList = new ArrayList<>();
+
+    public SimpleParking(int carLots, int truckLots) {
+        this.carLots = carLots;
+        this.truckLots = truckLots;
+    }
 
     @Override
     public boolean park(Vehicle vehicle) {

@@ -1,11 +1,11 @@
 package ru.job4j.ood.lsp.parking;
 
 public class Truck extends Vehicle {
-    private static final int TRUCK_SIZE = 2;
-    private static final String TRUCK_TYPE = "Truck";
+    public static final int TRUCK_SIZE = 2;
+    public static final String TRUCK_TYPE = "Truck";
 
     public Truck(String type, int size, String licensePlate) {
-        super(TRUCK_TYPE, TRUCK_SIZE, licensePlate);
+        super(type, size, licensePlate);
     }
 
     @Override
