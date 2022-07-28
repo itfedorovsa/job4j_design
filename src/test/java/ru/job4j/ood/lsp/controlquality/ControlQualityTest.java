@@ -11,16 +11,15 @@ import java.util.List;
 public class ControlQualityTest {
 
     List<Store> listStore;
+    Shop shop = new Shop();
+    Warehouse warehouse = new Warehouse();
+    Trash trash = new Trash();
 
     ControlQuality control;
 
     @Before
     public void setup() {
-        listStore = List.of(
-                new Shop(),
-                new Warehouse(),
-                new Trash()
-        );
+        listStore = List.of(shop, warehouse, trash);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -35,8 +34,7 @@ public class ControlQualityTest {
         Bread bread = new Bread("Bread", LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2), 50.00f, 10.0f);
         control = new ControlQuality(listStore);
         control.distribute(bread);
-        List<Food> expected = listStore.get(2).get();
-        assertThat(expected, is(List.of(bread)));
+        assertThat(trash.get(), is(List.of(bread)));
     }
 
     @Test
@@ -44,8 +42,7 @@ public class ControlQualityTest {
         Food milk = new Milk("Milk", LocalDate.now().plusMonths(1), LocalDate.now().minusMonths(1), 50.00f, 10.0f);
         control = new ControlQuality(listStore);
         control.distribute(milk);
-        List<Food> expected = listStore.get(0).get();
-        assertThat(expected, is(List.of(milk)));
+        assertThat(shop.get(), is(List.of(milk)));
     }
 
     @Test
@@ -53,8 +50,8 @@ public class ControlQualityTest {
         Food fruit = new Fruit("Fruit", LocalDate.now().plusDays(2), LocalDate.now().minusMonths(1), 50.00f, 10.0f);
         control = new ControlQuality(listStore);
         control.distribute(fruit);
-        List<Food> expected = listStore.get(0).get();
-        assertThat(expected, is(List.of(fruit)));
+        fruit.setPrice(45.00f);
+        assertThat(shop.get(), is(List.of(fruit)));
     }
 
     @Test
@@ -62,8 +59,7 @@ public class ControlQualityTest {
         Food fruit = new Fruit("Fruit", LocalDate.now().plusMonths(1), LocalDate.now().minusDays(2), 50.00f, 10.0f);
         control = new ControlQuality(listStore);
         control.distribute(fruit);
-        List<Food> expected = listStore.get(1).get();
-        assertThat(expected, is(List.of(fruit)));
+        assertThat(warehouse.get(), is(List.of(fruit)));
     }
 
     @Test
@@ -75,12 +71,9 @@ public class ControlQualityTest {
         control.distribute(fruit);
         control.distribute(milk);
         control.distribute(bread);
-        List<Food> expected = listStore.get(0).get();
-        assertThat(expected, is(List.of(milk)));
-        expected = listStore.get(1).get();
-        assertThat(expected, is(List.of(fruit)));
-        expected = listStore.get(2).get();
-        assertThat(expected, is(List.of(bread)));
+        assertThat(trash.get(), is(List.of(bread)));
+        assertThat(warehouse.get(), is(List.of(fruit)));
+        assertThat(shop.get(), is(List.of(milk)));
     }
 
 }
