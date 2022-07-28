@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trash implements Store {
-    List<Food> list = new ArrayList<>();
+    private final List<Food> list = new ArrayList<>();
 
     @Override
     public boolean put(Food food) {

@@ -22,7 +22,7 @@ public class Shop implements Store {
 
     @Override
     public boolean check(Food food) {
-        int conditionPercentage = ControlQuality.getProductConditionPercentage(food);
+        int conditionPercentage = getProductConditionPercentage(food);
         if (conditionPercentage >= 25 && conditionPercentage <= 75) {
            return true;
         } else if (conditionPercentage >= 75 && conditionPercentage < 100) {

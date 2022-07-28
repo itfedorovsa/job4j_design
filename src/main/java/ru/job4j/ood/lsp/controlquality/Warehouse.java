@@ -22,6 +22,6 @@ public class Warehouse implements Store {
 
     @Override
     public boolean check(Food food) {
-        return ControlQuality.getProductConditionPercentage(food) < 25;
+        return getProductConditionPercentage(food) < 25;
     }
 }

@@ -17,9 +17,9 @@ public class ControlQualityTest {
     @Before
     public void setup() {
         listStore = List.of(
-        new Shop(),
-        new Warehouse(),
-        new Trash()
+                new Shop(),
+                new Warehouse(),
+                new Trash()
         );
     }
 
@@ -32,11 +32,11 @@ public class ControlQualityTest {
 
     @Test
     public void whenTrash() {
-        Food bread = new Bread("Bread", LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2), 50.00f, 10.0f);
+        Bread bread = new Bread("Bread", LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2), 50.00f, 10.0f);
         control = new ControlQuality(listStore);
         control.distribute(bread);
         List<Food> expected = listStore.get(2).get();
-        assertThat(expected.get(0).getFood(), is("Bread"));
+        assertThat(expected, is(List.of(bread)));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ControlQualityTest {
         control = new ControlQuality(listStore);
         control.distribute(milk);
         List<Food> expected = listStore.get(0).get();
-        assertThat(expected.get(0).getPrice(), is(50.00f));
+        assertThat(expected, is(List.of(milk)));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ControlQualityTest {
         control = new ControlQuality(listStore);
         control.distribute(fruit);
         List<Food> expected = listStore.get(0).get();
-        assertThat(expected.get(0).getPrice(), is(45.00f));
+        assertThat(expected, is(List.of(fruit)));
     }
 
     @Test
@@ -63,7 +63,24 @@ public class ControlQualityTest {
         control = new ControlQuality(listStore);
         control.distribute(fruit);
         List<Food> expected = listStore.get(1).get();
-        assertThat(expected.get(0).getFood(), is("Fruit"));
+        assertThat(expected, is(List.of(fruit)));
+    }
+
+    @Test
+    public void whenDiverseStores() {
+        Food fruit = new Fruit("Fruit", LocalDate.now().plusMonths(1), LocalDate.now().minusDays(2), 50.00f, 10.0f);
+        Food milk = new Milk("Milk", LocalDate.now().plusMonths(1), LocalDate.now().minusMonths(1), 50.00f, 10.0f);
+        Bread bread = new Bread("Bread", LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2), 50.00f, 10.0f);
+        control = new ControlQuality(listStore);
+        control.distribute(fruit);
+        control.distribute(milk);
+        control.distribute(bread);
+        List<Food> expected = listStore.get(0).get();
+        assertThat(expected, is(List.of(milk)));
+        expected = listStore.get(1).get();
+        assertThat(expected, is(List.of(fruit)));
+        expected = listStore.get(2).get();
+        assertThat(expected, is(List.of(bread)));
     }
 
 }
