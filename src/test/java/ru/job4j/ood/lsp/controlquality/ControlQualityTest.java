@@ -11,14 +11,17 @@ import java.util.List;
 public class ControlQualityTest {
 
     List<Store> listStore;
-    Shop shop = new Shop();
-    Warehouse warehouse = new Warehouse();
-    Trash trash = new Trash();
+    Shop shop;
+    Warehouse warehouse;
+    Trash trash;
 
     ControlQuality control;
 
     @Before
     public void setup() {
+        shop = new Shop();
+        warehouse = new Warehouse();
+        trash = new Trash();
         listStore = List.of(shop, warehouse, trash);
     }
 
