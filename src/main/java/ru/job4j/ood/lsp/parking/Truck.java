@@ -1,11 +1,13 @@
 package ru.job4j.ood.lsp.parking;
 
 public class Truck extends Vehicle {
-    public static final int TRUCK_SIZE = 2;
-    public static final String TRUCK_TYPE = "Truck";
 
     public Truck(String type, int size, String licensePlate) {
         super(type, size, licensePlate);
+        if (size <= Car.CAR_SIZE) {
+            throw new IllegalArgumentException("Truck size must be more than 1");
+        }
+
     }
 
     @Override

@@ -1,13 +1,18 @@
 package ru.job4j.ood.lsp.parking;
 
-public class Vehicle {
+public abstract class Vehicle {
     private final String type;
-    private final int size;
+    private int size;
     private final String licensePlate;
 
     public Vehicle(String type, int size, String licensePlate) {
         this.type = type;
         this.size = size;
+        this.licensePlate = licensePlate;
+    }
+
+    public Vehicle(String type, String licensePlate) {
+        this.type = type;
         this.licensePlate = licensePlate;
     }
 
@@ -31,4 +36,5 @@ public class Vehicle {
                 + ", licensePlate='" + licensePlate + '\''
                 + '}';
     }
+
 }

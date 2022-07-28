@@ -7,6 +7,6 @@ public interface Parking {
 
     List<Vehicle> getParkedVehicles();
 
-    Vehicle getVehicle(String licensePlate);
+    Vehicle getVehicle(Vehicle vehicle);
 
 }
