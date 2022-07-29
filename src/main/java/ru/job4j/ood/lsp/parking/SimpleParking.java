@@ -1,7 +1,7 @@
 package ru.job4j.ood.lsp.parking;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static ru.job4j.ood.lsp.parking.Car.CAR_SIZE;
 
@@ -10,8 +10,8 @@ public class SimpleParking implements Parking {
     private int truckLots;
     private static final int EMPTY_PARKING = 0;
     private static final int ONE_TRUCK_LOT = 1;
-    private final List<Vehicle> carsList = new ArrayList<>();
-    private final List<Vehicle> trucksList = new ArrayList<>();
+    private final Set<Vehicle> carsList = new HashSet<>();
+    private final Set<Vehicle> trucksList = new HashSet<>();
 
     public SimpleParking(int carLots, int truckLots) {
         this.carLots = carLots;
@@ -20,50 +20,53 @@ public class SimpleParking implements Parking {
 
     @Override
     public boolean park(Vehicle vehicle) {
+        boolean isParked = false;
         int size = vehicle.getSize();
-        /*for (Vehicle v : carsList) {
-            if (v.getLicensePlate().equals(vehicle.getLicensePlate())) {
-                return false;
-            }
-        }*/
-        if (size < CAR_SIZE) {
-            throw new IllegalArgumentException("Every vehicle must have a certain size!");
-        } else if (size == CAR_SIZE && carLots > EMPTY_PARKING) {
+        if (carsList.contains(vehicle) || trucksList.contains(vehicle)) {
+            return false;
+        }
+        if (size == CAR_SIZE && carLots > EMPTY_PARKING) {
             carsList.add(vehicle);
             carLots -= size;
-            return true;
+            isParked = true;
         } else if (size > CAR_SIZE && truckLots > EMPTY_PARKING) {
-            carsList.add(vehicle);
+            trucksList.add(vehicle);
             truckLots -= ONE_TRUCK_LOT;
-            return true;
+            isParked = true;
         } else if (size > CAR_SIZE && carLots >= size) {
-            carsList.add(vehicle);
-            truckLots -= size;
-            return true;
+            trucksList.add(vehicle);
+            carLots -= size;
+            isParked = true;
         }
-        return false;
+        return isParked;
     }
 
     @Override
-    public List<Vehicle> getParkedVehicles() {
-        return new ArrayList<>(carsList);
+    public Set<Vehicle> getParkedCars() {
+        return Set.copyOf(carsList);
+    }
+
+    @Override
+    public Set<Vehicle> getParkedTrucks() {
+        return Set.copyOf(trucksList);
     }
 
     @Override
     public Vehicle getVehicle(Vehicle vehicle) {
+        Vehicle v = null;
         if (vehicle.getSize() == 1) {
-            return findVehicle(carsList, vehicle);
+            vehicle = findVehicle(carsList, vehicle);
         }
-        return findVehicle(trucksList, vehicle);
+        vehicle = findVehicle(trucksList, vehicle);
+        return vehicle;
     }
 
-    protected static Vehicle findVehicle(List<Vehicle> list, Vehicle vehicle) {
-        for (Vehicle v : list) {
-            if (v.getLicensePlate().equals(vehicle.getLicensePlate())) {
-                return v;
-            }
+    protected static Vehicle findVehicle(Set<Vehicle> vehicles, Vehicle vehicle) {
+        Vehicle v = null;
+        if (vehicles.contains(vehicle)) {
+            v = vehicle;
         }
-        return null;
+        return v;
     }
 
 }

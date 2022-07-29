@@ -24,4 +24,19 @@ public class Truck extends Vehicle {
     public String getLicensePlate() {
         return super.getLicensePlate();
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

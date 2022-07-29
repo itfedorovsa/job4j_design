@@ -1,5 +1,7 @@
 package ru.job4j.ood.lsp.parking;
 
+import java.util.Objects;
+
 public abstract class Vehicle {
     private final String type;
     private int size;
@@ -37,4 +39,20 @@ public abstract class Vehicle {
                 + '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Vehicle vehicle = (Vehicle) o;
+        return Objects.equals(licensePlate, vehicle.licensePlate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(licensePlate);
+    }
 }
