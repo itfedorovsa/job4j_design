@@ -64,13 +64,16 @@ public class SimpleMenuTest {
         menu.add("Buy drinks", "Buy juice", STUB_ACTION);
         SimpleMenuPrinter printer = new SimpleMenuPrinter();
         printer.print(menu);
-        String expected = """
-                1.Go to the store\r
-                    1.1.Buy drinks\r
-                        1.1.1.Buy juice\r
-                2.Feed the dog\r
-                """;
- assertThat(printer.toString(), is(expected));
+        StringBuilder expected = new StringBuilder()
+                .append("1.Go to the store")
+                .append(System.lineSeparator())
+                .append("    1.1.Buy drinks")
+                .append(System.lineSeparator())
+                .append("        1.1.1.Buy juice")
+                .append(System.lineSeparator())
+                .append("2.Feed the dog")
+                .append(System.lineSeparator());
+ assertThat(printer.toString(), is(expected.toString()));
     }
 
 }
