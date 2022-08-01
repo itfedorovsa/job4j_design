@@ -1,5 +1,6 @@
 package ru.job4j.ood.lsp.controlquality;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -16,12 +17,14 @@ public class ControlQuality {
     }
 
     public void reSort() {
-        for (Store foodList : storeList) {
-            for (int food = 0; food < foodList.get().size(); food++) {
-                Food temp = foodList.get().get(food);
-                foodList.get().remove(food);
-                distribute(temp);
-            }
+        List<Food> allFood = new ArrayList<>();
+        for (Store store : storeList) {
+            List<Food> foodList = store.get();
+            allFood.addAll(foodList);
+            store.clearStore();
+        }
+        for (Food food : allFood) {
+            distribute(food);
         }
     }
 

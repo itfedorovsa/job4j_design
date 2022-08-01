@@ -18,11 +18,16 @@ public class Trash implements Store {
 
     @Override
     public List<Food> get() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override
     public boolean check(Food food) {
         return LocalDate.now().isAfter(food.getExpiryDate());
+    }
+
+    @Override
+    public void clearStore() {
+        list.clear();
     }
 }

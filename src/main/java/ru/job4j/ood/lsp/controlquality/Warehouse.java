@@ -17,11 +17,16 @@ public class Warehouse implements Store {
 
     @Override
     public List<Food> get() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override
     public boolean check(Food food) {
         return getProductConditionPercentage(food) < 25;
+    }
+
+    @Override
+    public void clearStore() {
+        list.clear();
     }
 }

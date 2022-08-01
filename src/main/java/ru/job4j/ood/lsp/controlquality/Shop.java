@@ -17,7 +17,7 @@ public class Shop implements Store {
 
     @Override
     public List<Food> get() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override
@@ -30,5 +30,10 @@ public class Shop implements Store {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void clearStore() {
+        list.clear();
     }
 }

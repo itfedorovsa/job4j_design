@@ -11,6 +11,8 @@ public interface Store {
 
     boolean check(Food food);
 
+    void clearStore();
+
     default int getProductConditionPercentage(Food food) {
         double fullTime = ChronoUnit.DAYS.between(food.getCreateDate(), food.getExpiryDate());
         double passedTime = ChronoUnit.DAYS.between(food.getCreateDate(), LocalDate.now());
