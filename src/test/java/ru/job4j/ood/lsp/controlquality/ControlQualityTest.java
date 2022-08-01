@@ -79,4 +79,22 @@ public class ControlQualityTest {
         assertThat(shop.get(), is(List.of(milk)));
     }
 
+    @Test
+    public void whenReSort() {
+        Food fruit = new Fruit("Fruit", LocalDate.now().plusMonths(1), LocalDate.now().minusDays(4), 50.00f, 10.0f);
+        Food milk = new Milk("Milk", LocalDate.now().plusMonths(1), LocalDate.now().minusMonths(1), 50.00f, 10.0f);
+        Bread bread = new Bread("Bread", LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2), 50.00f, 10.0f);
+        control = new ControlQuality(listStore);
+        control.distribute(fruit);
+        control.distribute(milk);
+        control.distribute(bread);
+        shop.get().get(0).setExpiryDate(LocalDate.now().minusDays(1));
+        warehouse.get().get(0).setExpiryDate(LocalDate.now().plusDays(4));
+        control.reSort();
+        assertThat(trash.get(), is(List.of(milk, bread)));
+        assertThat(warehouse.get(), is(List.of()));
+        assertThat(shop.get(), is(List.of(fruit)));
+
+    }
+
 }

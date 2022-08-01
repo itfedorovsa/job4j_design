@@ -17,7 +17,7 @@ public class Shop implements Store {
 
     @Override
     public List<Food> get() {
-        return new ArrayList<>(list);
+        return list;
     }
 
     @Override
