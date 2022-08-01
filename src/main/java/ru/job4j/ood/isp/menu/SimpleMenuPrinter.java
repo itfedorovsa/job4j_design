@@ -1,14 +1,14 @@
 package ru.job4j.ood.isp.menu;
 
 public class SimpleMenuPrinter implements MenuPrinter {
-    StringBuilder builder = new StringBuilder();
+    private static final String FILLING = "    ";
+    private final StringBuilder builder = new StringBuilder();
 
     @Override
     public void print(Menu menu) {
         menu.forEach(f -> {
                     String[] split = f.getNumber().split("\\.");
-                    String filling = "\t";
-                    builder.append(filling.repeat(split.length - 1))
+                    builder.append(FILLING.repeat(split.length - 1))
                             .append(f.getNumber())
                             .append(f.getName())
                             .append(System.lineSeparator());

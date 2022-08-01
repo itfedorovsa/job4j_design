@@ -66,8 +66,8 @@ public class SimpleMenuTest {
         printer.print(menu);
         String expected = """
                 1.Go to the store\r
-                \t1.1.Buy drinks\r
-                \t\t1.1.1.Buy juice\r
+                    1.1.Buy drinks\r
+                        1.1.1.Buy juice\r
                 2.Feed the dog\r
                 """;
  assertThat(printer.toString(), is(expected));
