@@ -17,6 +17,7 @@ public class UserGenerator implements Generate {
     public List<String> names;
     public List<String> surnames;
     public List<String> patrons;
+
     private List<User> users = new ArrayList<>();
     private Random random;
 
